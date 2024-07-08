@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head><title>Syntax Highlighted Code</title>
+<style>
+  .pp { color: lightgreen; }
+  .ot { color: white; }
+  .pu { color: purple; }
+  .dt { color: red; }
+  .ft { color: aqua; }
+  .st { color: yellow; }
+  .lk { color: lightgreen; }
+  .ct { color: #ffbf00; }
+  .co { background-color: black; color: #D3D3D3; font-style: italic; padding: 2px; }
+  </style>
+</head>
+<body style='background-color: navy; font-size: 20px; color: white;'>
+ <pre>
+ 
+<span class='co'>//--------------------------------------------------------------------------- </span>
+ 
+<span class='pp'>#pragma hdrstop </span>
+ 
+<span class='pp'>#include &quot;tokenize.h&quot; </span>
+<span class='co'>//--------------------------------------------------------------------------- </span>
+<span class='pp'>#pragma package(smart_init) </span>
+<span class='co'>//--------------------------------------------------------------------------- </span>
+ 
+<span class='pp'>#if defined(__BORLANDC__) &amp;&amp; defined(__clang__) &amp;&amp; defined(_WIN32) &amp;&amp; !defined(_WIN64) </span>
+<span class='lk'>void</span> <span class='ft'>madd</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+<span class='ot'>{</span> 
+    <span class='ct'>printf</span><span class='ot'>(</span><span class='st'>&quot;%s&quot;</span><span class='ot'>,</span> <span class='ft'>s</span><span class='ot'>)</span>; 
+<span class='ot'>}</span> 
+<span class='pp'>#else  </span>
+<span class='lk'>void</span> <span class='ft'>madd</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span>; 
+<span class='pp'>#endif      </span>
+ 
+<span class='lk'>char</span> <span class='ft'>tmp</span><span class='ot'>[</span><span class='dt'>65536</span><span class='ot'>]</span>; 
+ 
+<span class='pp'>#include &lt;stdio.h&gt; </span>
+ 
+<span class='co'>//--------------------------------------------------------------------------- </span>
+ 
+<span class='lk'>int</span> <span class='ft'>isThreeCharKeyword</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+<span class='ot'>{</span> 
+    <span class='lk'>char</span> <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>4</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>; 
+    <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>strchr</span><span class='ot'>(</span><span class='st'>&quot;.-&lt;&gt;&quot;</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>)) <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>=<span class='ft'>s</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>; <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>1</span><span class='ot'>]</span>=<span class='ft'>s</span><span class='ot'>[</span><span class='dt'>1</span><span class='ot'>]</span>;<span class='ft'>t</span><span class='ot'>[</span><span class='dt'>2</span><span class='ot'>]</span>=<span class='ft'>s</span><span class='ot'>[</span><span class='dt'>2</span><span class='ot'>]</span>; 
+    <span class='lk'>const</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>threeCharOperators</span><span class='ot'>[]</span> <span class='ot'>=</span> <span class='ot'>{</span> 
+    <span class='st'>&quot;...&quot;</span><span class='ot'>,</span>    <span class='st'>&quot;-&gt;&gt;&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;&lt;&lt;=&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;&gt;&gt;=&quot;</span><span class='ot'>}</span>;
+    <span class='lk'>int</span> <span class='ft'>sizeofarray</span> <span class='ot'>=</span> <span class='dt'>4</span><span class='ot'>;</span>
+    <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+    <span class='ot'>{</span>
+      <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ct'>strcmp</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span> <span class='ft'>threeCharOperators</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>))
+      <span class='ot'>{</span> 
+        <span class='lk'>return</span> <span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>threeCharOperators</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+      <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+    <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+<span class='ot'>}</span>
+ 
+ 
+<span class='co'>//-------------------------------------------------------------------- </span>
+ 
+ <span class='lk'>int</span> <span class='ft'>isTwoCharKeyword</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+ <span class='ot'>{</span> 
+    <span class='lk'>char</span> <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>4</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>; 
+    <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>strchr</span><span class='ot'>(</span><span class='st'>&quot;([&gt;&lt;=!&amp;|+-:?&quot;</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>)) <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>=<span class='ft'>s</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>; <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>1</span><span class='ot'>]</span>=<span class='ft'>s</span><span class='ot'>[</span><span class='dt'>1</span><span class='ot'>]</span>; 
+    <span class='lk'>const</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>twoCharKeywords</span><span class='ot'>[]</span> <span class='ot'>=</span> <span class='ot'>{</span> 
+    <span class='st'>&quot;&gt;=&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;&lt;=&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;==&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;!=&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;&amp;&amp;&quot;</span><span class='ot'>,</span>
+    <span class='st'>&quot;||&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;++&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;--&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;-&gt;&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;::&quot;</span><span class='ot'>,</span>
+    <span class='st'>&quot;?:&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;&lt;&lt;&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;&gt;&gt;&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;[]&quot;</span><span class='ot'>,</span>   <span class='st'>&quot;()&quot;</span><span class='ot'>}</span>;
+    <span class='lk'>int</span> <span class='ft'>sizeofarray</span> <span class='ot'>=</span> <span class='dt'>15</span><span class='ot'>;</span>
+    <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+    <span class='ot'>{</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ct'>strcmp</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span> <span class='ft'>twoCharKeywords</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>))
+      <span class='ot'>{</span> 
+        <span class='lk'>return</span> <span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>twoCharKeywords</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+      <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+    <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+ <span class='ot'>}</span>
+ 
+  <span class='co'>//--------------------------------------------------------------------</span>
+ 
+<span class='lk'>int</span> <span class='ft'>isletter</span><span class='ot'>(</span><span class='lk'>char</span> <span class='ft'>c</span><span class='ot'>)</span> 
+<span class='ot'>{</span> 
+  <span class='lk'>if</span> <span class='ot'>(</span>(<span class='ft'>c</span><span class='ot'>&gt;=</span><span class='st'>&#39;a&#39;</span><span class='ot'>&amp;&amp;</span> <span class='ft'>c</span><span class='ot'>&lt;=</span><span class='st'>&#39;z&#39;</span><span class='ot'>)</span> <span class='ot'>||</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>&gt;=</span><span class='st'>&#39;A&#39;</span><span class='ot'>&amp;&amp;</span> <span class='ft'>c</span><span class='ot'>&lt;=</span><span class='st'>&#39;Z&#39;</span><span class='ot'>)</span>) <span class='ot'>{</span> <span class='lk'>return</span> <span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+  <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+<span class='ot'>}</span> 
+ 
+<span class='co'>//-------------------------------------------------------------------- </span>
+ 
+ 
+<span class='lk'>int</span> <span class='ft'>isascii2</span><span class='ot'>(</span><span class='lk'>char</span> <span class='ft'>c</span><span class='ot'>)</span> 
+<span class='ot'>{</span> 
+  <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>isletter</span><span class='ot'>(</span><span class='ft'>c</span><span class='ot'>)</span>) <span class='ot'>{</span> <span class='lk'>return</span> <span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+  <span class='lk'>if</span> <span class='ot'>(</span><span class='ct'>isdigit</span><span class='ot'>(</span><span class='ft'>c</span><span class='ot'>)</span>) <span class='ot'>{</span> <span class='lk'>return</span> <span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+  <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;_&#39;</span><span class='ot'>)</span> <span class='ot'>{</span> <span class='lk'>return</span> <span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+  <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+<span class='ot'>}</span> 
+ 
+
+<span class='co'>//-------------------------------------------------------------------- </span>
+<span class='co'>// Stops at the length of t, so checks the length of the keyword  </span>
+<span class='co'>// But if the char at the end of the keyword is azAZ09_ then return  </span>
+<span class='co'>// a mismatch or 1  </span>
+<span class='co'>//-------------------------------------------------------------------- </span>
+ 
+ <span class='lk'>int</span> <span class='ft'>strcmp2</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>,</span> <span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>keywd</span><span class='ot'>)</span> 
+ <span class='ot'>{</span> 
+   <span class='lk'>int</span> <span class='ft'>strlen_keywd</span> <span class='ot'>=</span> <span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>keywd</span><span class='ot'>)</span>; 
+   <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>strlen_keywd</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+   <span class='ot'>{</span> 
+     <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>s</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>!=<span class='ft'>keywd</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>) <span class='ot'>{</span> <span class='lk'>return</span> <span class='ft'>s</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>-<span class='ft'>keywd</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>; <span class='ot'>}</span> 
+   <span class='ot'>}</span> 
+   <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>isascii2</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>[</span><span class='ft'>strlen_keywd</span><span class='ot'>]</span>)) <span class='ot'>{</span> <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ot'>}</span> 
+   <span class='lk'>return</span> <span class='dt'>1</span><span class='ot'>;</span>  
+ <span class='ot'>}</span> 
+ 
+<span class='co'>//-------------------------------------------------------------------- </span>
+ 
+ <span class='lk'>int</span> <span class='ft'>isCommonKw</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>,</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>ret</span><span class='ot'>)</span> 
+ <span class='ot'>{</span> 
+    <span class='lk'>char</span> <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>12</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>; <span class='ct'>strncpy</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>,</span><span class='dt'>10</span><span class='ot'>)</span>;<span class='ft'>t</span><span class='ot'>[</span><span class='dt'>10</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+    <span class='lk'>const</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>commkw</span><span class='ot'>[]</span> <span class='ot'>=</span> <span class='ot'>{</span> 
+    <span class='st'>&quot;cout&quot;</span>    <span class='ot'>,</span> <span class='st'>&quot;strcpy&quot;</span> <span class='ot'>,</span> <span class='st'>&quot;strncpy&quot;</span><span class='ot'>,</span> <span class='st'>&quot;strcmp&quot;</span>  <span class='ot'>,</span> <span class='st'>&quot;cin&quot;</span>     <span class='ot'>,</span> 
+    <span class='st'>&quot;strcat&quot;</span>  <span class='ot'>,</span> <span class='st'>&quot;strncat&quot;</span><span class='ot'>,</span> <span class='st'>&quot;cerr&quot;</span>   <span class='ot'>,</span> <span class='st'>&quot;endl&quot;</span>    <span class='ot'>,</span> <span class='st'>&quot;ifstream&quot;</span><span class='ot'>,</span> 
+    <span class='st'>&quot;ofstream&quot;</span><span class='ot'>,</span> <span class='st'>&quot;getline&quot;</span><span class='ot'>,</span> <span class='st'>&quot;strtok&quot;</span> <span class='ot'>,</span> <span class='st'>&quot;sprintf&quot;</span> <span class='ot'>,</span> <span class='st'>&quot;isspace&quot;</span> <span class='ot'>,</span>  
+    <span class='st'>&quot;printf&quot;</span>  <span class='ot'>,</span> <span class='st'>&quot;strlen&quot;</span> <span class='ot'>,</span> <span class='st'>&quot;isdigit&quot;</span><span class='ot'>,</span> <span class='ot'>}</span>; 
+    <span class='pp'>#define sizeofarray 18 </span>
+    <span class='lk'>static</span> <span class='lk'>int</span> <span class='ft'>ckLength</span><span class='ot'>[</span><span class='ft'>sizeofarray</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>; 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>ckLength</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>==<span class='dt'>0</span><span class='ot'>)</span> <span class='co'>// should happen once </span>
+    <span class='ot'>{</span> <span class='co'>// so length is not used all the time</span>
+      <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+      <span class='ft'>ckLength</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>=<span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>commkw</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+    <span class='ot'>}</span>
+
+    <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>)
+    <span class='ot'>{</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>strcmp2</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span> <span class='ft'>commkw</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>)) 
+      <span class='ot'>{</span> 
+        <span class='ct'>strcpy</span><span class='ot'>(</span><span class='ft'>ret</span><span class='ot'>,</span><span class='ft'>commkw</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+        <span class='lk'>return</span> <span class='ft'>ckLength</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>; 
+      <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+    <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+ <span class='ot'>}</span>
+ 
+<span class='co'>//-------------------------------------------------------------------- </span>
+ 
+ <span class='lk'>int</span> <span class='ft'>isDirective</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>,</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>ret</span><span class='ot'>)</span> 
+ <span class='ot'>{</span> 
+    <span class='lk'>char</span> <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>12</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>; <span class='ct'>strncpy</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>,</span><span class='dt'>10</span><span class='ot'>)</span>;<span class='ft'>t</span><span class='ot'>[</span><span class='dt'>10</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+    <span class='lk'>const</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>preprocessorDirectives</span><span class='ot'>[]</span> <span class='ot'>=</span> <span class='ot'>{</span> 
+    <span class='st'>&quot;#warning&quot;</span><span class='ot'>,</span> <span class='st'>&quot;!defined&quot;</span><span class='ot'>,</span> <span class='st'>&quot;#include&quot;</span><span class='ot'>,</span> <span class='st'>&quot;#define&quot;</span><span class='ot'>,</span> <span class='st'>&quot;#pragma&quot;</span><span class='ot'>,</span> 
+    <span class='st'>&quot;#undef&quot;</span>  <span class='ot'>,</span> <span class='st'>&quot;#ifndef&quot;</span> <span class='ot'>,</span> <span class='st'>&quot;#ifdef&quot;</span>  <span class='ot'>,</span> <span class='st'>&quot;#endif&quot;</span> <span class='ot'>,</span> <span class='st'>&quot;#error&quot;</span> <span class='ot'>,</span> 
+    <span class='st'>&quot;#elif&quot;</span>   <span class='ot'>,</span> <span class='st'>&quot;#else&quot;</span>   <span class='ot'>,</span> <span class='st'>&quot;#line&quot;</span>   <span class='ot'>,</span>  <span class='st'>&quot;#if&quot;</span> <span class='ot'>}</span>;
+    <span class='pp'>#define sizeofarray1 14</span>
+    <span class='lk'>static</span> <span class='lk'>int</span> <span class='ft'>ppLength</span><span class='ot'>[</span><span class='ft'>sizeofarray1</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>;
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>ppLength</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>==<span class='dt'>0</span><span class='ot'>)</span> <span class='co'>// should happen once</span>
+    <span class='ot'>{</span> <span class='co'>// so length is not used all the time</span>
+      <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray1</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+      <span class='ft'>ppLength</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>=<span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>preprocessorDirectives</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+    <span class='ot'>}</span>
+
+    <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray1</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+    <span class='ot'>{</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>strcmp2</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span> <span class='ft'>preprocessorDirectives</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>)) 
+      <span class='ot'>{</span> 
+        <span class='ct'>strcpy</span><span class='ot'>(</span><span class='ft'>ret</span><span class='ot'>,</span><span class='ft'>preprocessorDirectives</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+        <span class='lk'>return</span> <span class='ft'>ppLength</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>; 
+      <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+    <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+<span class='ot'>}</span> 
+ 
+<span class='co'>//-------------------------------------------------------------------- </span>
+ 
+ <span class='lk'>int</span> <span class='ft'>isKeyword</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>,</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>ret</span><span class='ot'>)</span> 
+ <span class='ot'>{</span> 
+    <span class='lk'>char</span> <span class='ft'>t</span><span class='ot'>[</span><span class='dt'>24</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>; <span class='ct'>strncpy</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>,</span><span class='dt'>18</span><span class='ot'>)</span>;<span class='ft'>t</span><span class='ot'>[</span><span class='dt'>18</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+    <span class='lk'>const</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>keywords</span><span class='ot'>[]</span> <span class='ot'>=</span> <span class='ot'>{</span> 
+    <span class='st'>&quot;reinterpret_cast&quot;</span><span class='ot'>,</span> <span class='st'>&quot;static_assert&quot;</span><span class='ot'>,</span> <span class='st'>&quot;dynamic_cast&quot;</span><span class='ot'>,</span> <span class='st'>&quot;thread_local&quot;</span><span class='ot'>,</span> <span class='st'>&quot;constexpr&quot;</span><span class='ot'>,</span> 
+    <span class='st'>&quot;__fastcall&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;static_cast&quot;</span>  <span class='ot'>,</span> <span class='st'>&quot;namespace&quot;</span>   <span class='ot'>,</span> <span class='st'>&quot;protected&quot;</span>   <span class='ot'>,</span> <span class='st'>&quot;unsigned&quot;</span> <span class='ot'>,</span>  
+    <span class='st'>&quot;continue&quot;</span>        <span class='ot'>,</span> <span class='st'>&quot;explicit&quot;</span>     <span class='ot'>,</span> <span class='st'>&quot;template&quot;</span>    <span class='ot'>,</span> <span class='st'>&quot;register&quot;</span>    <span class='ot'>,</span> <span class='st'>&quot;volatile&quot;</span> <span class='ot'>,</span>  
+    <span class='st'>&quot;noexcept&quot;</span>        <span class='ot'>,</span> <span class='st'>&quot;typename&quot;</span>     <span class='ot'>,</span> <span class='st'>&quot;nullptr&quot;</span>     <span class='ot'>,</span> <span class='st'>&quot;alignas&quot;</span>     <span class='ot'>,</span> <span class='st'>&quot;private&quot;</span>  <span class='ot'>,</span>  
+    <span class='st'>&quot;wchar_t&quot;</span>         <span class='ot'>,</span> <span class='st'>&quot;typedef&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;alignof&quot;</span>     <span class='ot'>,</span> <span class='st'>&quot;default&quot;</span>     <span class='ot'>,</span> <span class='st'>&quot;mutable&quot;</span>  <span class='ot'>,</span>  
+    <span class='st'>&quot;virtual&quot;</span>         <span class='ot'>,</span> <span class='st'>&quot;sizeof&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;export&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;extern&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;bitand&quot;</span>   <span class='ot'>,</span>  
+    <span class='st'>&quot;delete&quot;</span>          <span class='ot'>,</span> <span class='st'>&quot;struct&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;not_eq&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;public&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;return&quot;</span>   <span class='ot'>,</span>  
+    <span class='st'>&quot;signed&quot;</span>          <span class='ot'>,</span> <span class='st'>&quot;static&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;typeid&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;union&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;false&quot;</span>    <span class='ot'>,</span>  
+    <span class='st'>&quot;xor_eq&quot;</span>          <span class='ot'>,</span> <span class='st'>&quot;and_eq&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;switch&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;using&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;bitor&quot;</span>    <span class='ot'>,</span>  
+    <span class='st'>&quot;inline&quot;</span>          <span class='ot'>,</span> <span class='st'>&quot;double&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;compl&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;size_t&quot;</span>      <span class='ot'>,</span> <span class='st'>&quot;throw&quot;</span>    <span class='ot'>,</span>  
+    <span class='st'>&quot;true&quot;</span>            <span class='ot'>,</span> <span class='st'>&quot;float&quot;</span>        <span class='ot'>,</span> <span class='st'>&quot;const&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;while&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;short&quot;</span>    <span class='ot'>,</span>  
+    <span class='st'>&quot;break&quot;</span>           <span class='ot'>,</span> <span class='st'>&quot;char&quot;</span>         <span class='ot'>,</span> <span class='st'>&quot;class&quot;</span>       <span class='ot'>,</span> <span class='st'>&quot;goto&quot;</span>        <span class='ot'>,</span> <span class='st'>&quot;else&quot;</span>     <span class='ot'>,</span>  
+    <span class='st'>&quot;long&quot;</span>            <span class='ot'>,</span> <span class='st'>&quot;void&quot;</span>         <span class='ot'>,</span> <span class='st'>&quot;enum&quot;</span>        <span class='ot'>,</span> <span class='st'>&quot;case&quot;</span>        <span class='ot'>,</span> <span class='st'>&quot;int&quot;</span>      <span class='ot'>,</span>  
+    <span class='st'>&quot;new&quot;</span>             <span class='ot'>,</span> <span class='st'>&quot;for&quot;</span>          <span class='ot'>,</span> <span class='st'>&quot;if&quot;</span>          <span class='ot'>,</span> <span class='st'>&quot;do&quot;</span><span class='ot'>}</span>;                         
+                                                                        
+    <span class='pp'>#define sizeofarray2 69 </span>
+    <span class='lk'>static</span> <span class='lk'>int</span> <span class='ft'>kwLength</span><span class='ot'>[</span><span class='ft'>sizeofarray2</span><span class='ot'>]</span>={<span class='dt'>0</span><span class='ot'>}</span>; 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>kwLength</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>==<span class='dt'>0</span><span class='ot'>)</span> <span class='co'>// should happen once.. </span>
+    <span class='ot'>{</span> <span class='co'>// ..so length is not used all the time </span>
+      <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray2</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+      <span class='ft'>kwLength</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>=<span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>keywords</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+    <span class='ot'>}</span> 
+ 
+    <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ft'>sizeofarray2</span><span class='ot'>;</span> <span class='ft'>i</span><span class='ot'>++</span>) 
+    <span class='ot'>{</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>strcmp2</span><span class='ot'>(</span><span class='ft'>t</span><span class='ot'>,</span> <span class='ft'>keywords</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>)) 
+      <span class='ot'>{</span> 
+        <span class='ct'>strcpy</span><span class='ot'>(</span><span class='ft'>ret</span><span class='ot'>,</span><span class='ft'>keywords</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>); 
+        <span class='lk'>return</span> <span class='ft'>kwLength</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>; 
+      <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+    <span class='lk'>return</span> <span class='dt'>0</span><span class='ot'>;</span> 
+ 
+ <span class='ot'>}</span> 
+ 
+ 
+<span class='co'>//---------------------------------------------------------------------- </span>
+<span class='co'>// returns TOKEN and TYPE of TOKEN which will determine how to color it </span>
+<span class='co'>//---------------------------------------------------------------------- </span>
+ 
+<span class='lk'>int</span>  <span class='ft'>getToken</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>,</span> <span class='lk'>int</span> <span class='ft'>pos</span><span class='ot'>,</span> <span class='lk'>int</span> <span class='ot'>&amp;</span> <span class='ft'>incby</span><span class='ot'>,</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>tok</span><span class='ot'>)</span> 
+<span class='ot'>{</span> 
+  <span class='ft'>incby</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+  <span class='ft'>s</span> <span class='ot'>+</span>= <span class='ft'>pos</span><span class='ot'>;</span> <span class='lk'>int</span> <span class='ft'>p</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> <span class='lk'>char</span> <span class='ft'>d</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+ 
+  <span class='co'>// Deal with 3,2,1 operators ________________________________ </span>
+  <span class='pp'>#define strcpy1(tok,c) tok[0]=c;tok[1]=&#39;\0&#39;; </span>
+  <span class='pp'>#define strcpy2(tok,c) tok[0]=c[0];tok[1]=c[1];tok[2]=&#39;\0&#39;; </span>
+ 
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;\r&#39;</span> <span class='ot'>||</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;\n&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='ft'>incby</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span><span class='ft'>strcpy1</span><span class='ot'>(</span><span class='ft'>tok</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>); 
+    <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;\r&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span>(<span class='ft'>s</span><span class='ot'>+</span><span class='dt'>1</span><span class='ot'>)</span>==<span class='st'>&#39;\n&#39;</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='ft'>incby</span><span class='ot'>=</span><span class='dt'>2</span><span class='ot'>;</span><span class='ft'>strcpy2</span><span class='ot'>(</span><span class='ft'>tok</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>)</span>; 
+    <span class='ot'>}</span> 
+    <span class='lk'>return</span> <span class='ft'>NEWLINE_CHAR</span><span class='ot'>;</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// Include and other directives______________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;#&#39;</span> <span class='ot'>||</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;!&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='ft'>incby</span><span class='ot'>=</span><span class='ft'>isDirective</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>,</span><span class='ft'>tok</span><span class='ot'>)</span>; 
+    <span class='ft'>s</span><span class='ot'>+</span>=<span class='ft'>incby</span><span class='ot'>;</span> 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>incby</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='lk'>while</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>!=</span><span class='st'>&#39;\n&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+      <span class='ot'>{</span> 
+        <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=*<span class='ft'>s</span><span class='ot'>++</span>; 
+      <span class='ot'>}</span> 
+      <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+      <span class='lk'>return</span> <span class='ft'>HASH_DIRECTIVE</span><span class='ot'>;</span> 
+    <span class='ot'>}</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// Common keywords _________________________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;s&#39;</span><span class='ot'>||</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;c&#39;</span><span class='ot'>||</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;e&#39;</span><span class='ot'>||</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;i&#39;</span><span class='ot'>||</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;o&#39;</span><span class='ot'>||</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;p&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='ft'>incby</span><span class='ot'>=</span><span class='ft'>isCommonKw</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>,</span><span class='ft'>tok</span><span class='ot'>)</span>; 
+    <span class='ft'>s</span><span class='ot'>+</span>=<span class='ft'>incby</span><span class='ot'>;</span> 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>incby</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+      <span class='lk'>return</span> <span class='ft'>COMMON_TYPE</span><span class='ot'>;</span> 
+    <span class='ot'>}</span> 
+  <span class='ot'>}</span> 
+ 
+ 
+  <span class='co'>// Clanguage Keyword________________________________________ </span>
+  <span class='lk'>char</span> <span class='ft'>firstlet</span><span class='ot'>[]</span> <span class='ot'>=</span> <span class='st'>&quot;abcdefgilmnprstuvwx&quot;</span><span class='ot'>;</span> 
+  <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>strchr</span><span class='ot'>(</span><span class='ft'>firstlet</span><span class='ot'>,</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span>) 
+  <span class='ot'>{</span> 
+    <span class='ft'>incby</span><span class='ot'>=</span><span class='ft'>isKeyword</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>,</span><span class='ft'>tok</span><span class='ot'>)</span>; 
+    <span class='ft'>s</span><span class='ot'>+</span>=<span class='ft'>incby</span><span class='ot'>;</span> 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>incby</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+      <span class='lk'>return</span> <span class='ft'>LANG_KEYWORD</span><span class='ot'>;</span> 
+    <span class='ot'>}</span> 
+  <span class='ot'>}</span> 
+ 
+ 
+  <span class='co'>// just a bunch of white spaces______________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span><span class='ct'>isspace</span><span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>)</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='lk'>char</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; <span class='lk'>while</span> <span class='ot'>(</span><span class='ct'>isspace</span><span class='ot'>(</span><span class='ft'>c</span><span class='ot'>)</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>c</span><span class='ot'>)</span> <span class='ot'>{</span> <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; <span class='ot'>}</span> 
+    <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+    <span class='lk'>return</span> <span class='ft'>DEFINE_SPACES</span><span class='ot'>;</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// single line comment_______________________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;/&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span>(<span class='ft'>s</span><span class='ot'>+</span><span class='dt'>1</span><span class='ot'>)</span>==<span class='st'>&#39;/&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='lk'>char</span> <span class='ft'>c</span><span class='ot'>=</span>*<span class='ft'>s</span><span class='ot'>++</span>; 
+    <span class='lk'>while</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>!=</span><span class='dt'>10</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>c</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> 
+      <span class='ft'>c</span><span class='ot'>=</span>*<span class='ft'>s</span><span class='ot'>++</span>; 
+    <span class='ot'>}</span> 
+    <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+    <span class='lk'>return</span> <span class='ft'>SINGLE_COMMENT</span><span class='ot'>;</span> 
+  <span class='ot'>}</span> 
+ 
+ 
+  <span class='co'>// Multi line comment_______________________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;/&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span>(<span class='ft'>s</span><span class='ot'>+</span><span class='dt'>1</span><span class='ot'>)</span>==<span class='st'>&#39;*&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='lk'>int</span> <span class='ft'>cond</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> 
+    <span class='lk'>char</span> <span class='ft'>c</span><span class='ot'>=</span>*<span class='ft'>s</span><span class='ot'>++</span>;<span class='ft'>d</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='lk'>while</span> <span class='ot'>(</span><span class='ft'>cond</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>c</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> 
+      <span class='ft'>d</span><span class='ot'>=</span><span class='ft'>c</span><span class='ot'>;</span> <span class='ft'>c</span><span class='ot'>=</span>*<span class='ft'>s</span><span class='ot'>++</span>; 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>d</span><span class='ot'>==</span><span class='st'>&#39;*&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;/&#39;</span><span class='ot'>)</span> 
+      <span class='ot'>{</span> 
+        <span class='ft'>cond</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+        <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> 
+        <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+        <span class='lk'>return</span> <span class='ft'>MULTI_COMMENT</span><span class='ot'>;</span> 
+      <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// Deal with 3,2,1 operators ________________________________ </span>
+  <span class='lk'>const</span> <span class='lk'>char</span> <span class='ft'>OneCharKW</span><span class='ot'>[]</span>=<span class='st'>&quot;+-*/%&lt;&gt;&amp;^|!~=?:.,;(){}[]&quot;</span><span class='ot'>;</span> 
+ 
+  <span class='co'>// Three and Two character keywords_________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>isascii2</span><span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>)</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>!</span><span class='ct'>isdigit</span><span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>)</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>!=</span><span class='st'>&#39;#&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>isThreeCharKeyword</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>)</span>) 
+    <span class='ot'>{</span> 
+      <span class='ft'>incby</span><span class='ot'>=</span><span class='dt'>3</span><span class='ot'>;</span><span class='ct'>strncpy</span><span class='ot'>(</span><span class='ft'>tok</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>,</span><span class='dt'>3</span><span class='ot'>)</span>;<span class='ft'>tok</span><span class='ot'>[</span><span class='dt'>3</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+      <span class='lk'>return</span> <span class='ft'>OPERATOR_TYPE</span><span class='ot'>;</span> 
+    <span class='ot'>}</span> 
+ 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>isTwoCharKeyword</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>)</span>) 
+    <span class='ot'>{</span> 
+      <span class='ft'>incby</span><span class='ot'>=</span><span class='dt'>2</span><span class='ot'>;</span><span class='ct'>strncpy</span><span class='ot'>(</span><span class='ft'>tok</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>,</span><span class='dt'>2</span><span class='ot'>)</span>;<span class='ft'>tok</span><span class='ot'>[</span><span class='dt'>2</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+      <span class='lk'>return</span> <span class='ft'>OPERATOR_TYPE</span><span class='ot'>;</span> 
+    <span class='ot'>}</span> 
+ 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>strchr</span><span class='ot'>(</span><span class='ft'>OneCharKW</span><span class='ot'>,</span> <span class='ft'>s</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>)) 
+    <span class='ot'>{</span> 
+      <span class='ft'>incby</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span><span class='ft'>strcpy1</span><span class='ot'>(</span><span class='ft'>tok</span><span class='ot'>,</span><span class='ft'>s</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>); 
+      <span class='lk'>return</span> <span class='ft'>OPERATOR_TYPE</span><span class='ot'>;</span> 
+    <span class='ot'>}</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// We are going in a single quote string_____________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;\&#39;&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='lk'>int</span> <span class='ft'>strcond</span> <span class='ot'>=</span> <span class='dt'>1</span><span class='ot'>;</span> 
+    <span class='lk'>char</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; 
+    <span class='lk'>char</span> <span class='ft'>lastc</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>,</span> <span class='ft'>lastcc</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> <span class='co'>// get the first single quote </span>
+    <span class='lk'>while</span> <span class='ot'>(</span><span class='ft'>strcond</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ct'>isspace</span><span class='ot'>(</span><span class='ft'>c</span><span class='ot'>)</span>&amp;&amp;<span class='ft'>c</span><span class='ot'>!=</span><span class='dt'>13</span> <span class='ot'>)</span> <span class='ot'>{</span> <span class='ft'>lastcc</span><span class='ot'>=</span><span class='ft'>lastc</span><span class='ot'>;</span> <span class='ft'>lastc</span> <span class='ot'>=</span> <span class='ft'>c</span><span class='ot'>;</span> <span class='ot'>}</span> 
+      <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; 
+      <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;\&#39;&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastc</span><span class='ot'>==</span><span class='st'>&#39;\\&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastcc</span><span class='ot'>!=</span><span class='st'>&#39;\\&#39;</span><span class='ot'>)</span> <span class='ot'>{</span> <span class='lk'>continue</span><span class='ot'>;</span> <span class='ot'>}</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;\&#39;&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastc</span><span class='ot'>==</span><span class='st'>&#39;\\&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastcc</span><span class='ot'>==</span><span class='st'>&#39;\\&#39;</span><span class='ot'>)</span> <span class='ot'>{</span><span class='ft'>strcond</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> <span class='lk'>return</span> <span class='ft'>CHAR_TYPE</span><span class='ot'>;</span> <span class='ot'>}</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;\&#39;&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastc</span><span class='ot'>!=</span><span class='st'>&#39;\\&#39;</span><span class='ot'>)</span>                 <span class='ot'>{</span><span class='ft'>strcond</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> <span class='lk'>return</span> <span class='ft'>CHAR_TYPE</span><span class='ot'>;</span> <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// We are going in a double quote string_____________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;\&quot;&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='lk'>int</span> <span class='ft'>strcond</span> <span class='ot'>=</span> <span class='dt'>1</span><span class='ot'>;</span> 
+    <span class='lk'>char</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; 
+    <span class='lk'>char</span> <span class='ft'>lastc</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>,</span> <span class='ft'>lastcc</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> <span class='co'>// get the first dbl quote </span>
+    <span class='lk'>while</span> <span class='ot'>(</span><span class='ft'>strcond</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ct'>isspace</span><span class='ot'>(</span><span class='ft'>c</span><span class='ot'>)</span>&amp;&amp;<span class='ft'>c</span><span class='ot'>!=</span><span class='dt'>13</span> <span class='ot'>)</span> <span class='ot'>{</span> <span class='ft'>lastcc</span><span class='ot'>=</span><span class='ft'>lastc</span><span class='ot'>;</span> <span class='ft'>lastc</span> <span class='ot'>=</span> <span class='ft'>c</span><span class='ot'>;</span> <span class='ot'>}</span> 
+      <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; 
+      <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;\&quot;&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastc</span><span class='ot'>==</span><span class='st'>&#39;\\&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastcc</span><span class='ot'>!=</span><span class='st'>&#39;\\&#39;</span><span class='ot'>)</span> <span class='ot'>{</span> <span class='lk'>continue</span><span class='ot'>;</span> <span class='ot'>}</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;\&quot;&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastc</span><span class='ot'>==</span><span class='st'>&#39;\\&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastcc</span><span class='ot'>==</span><span class='st'>&#39;\\&#39;</span><span class='ot'>)</span> <span class='ot'>{</span><span class='ft'>strcond</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> <span class='lk'>return</span> <span class='ft'>STRING_TYPE</span><span class='ot'>;</span> <span class='ot'>}</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span><span class='ot'>==</span><span class='st'>&#39;\&quot;&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>lastc</span><span class='ot'>!=</span><span class='st'>&#39;\\&#39;</span><span class='ot'>)</span>                 <span class='ot'>{</span><span class='ft'>strcond</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> <span class='lk'>return</span> <span class='ft'>STRING_TYPE</span><span class='ot'>;</span> <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// Deal with Hex digits______________________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;0&#39;</span> <span class='ot'>&amp;&amp;</span> <span class='ot'>*</span>(<span class='ft'>s</span><span class='ot'>+</span><span class='dt'>1</span><span class='ot'>)</span>==<span class='st'>&#39;x&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+     <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=*<span class='ft'>s</span><span class='ot'>++</span>; 
+     <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=*<span class='ft'>s</span><span class='ot'>++</span>; 
+     <span class='lk'>char</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; <span class='lk'>while</span> <span class='ot'>(</span><span class='ft'>isxdigit</span><span class='ot'>(</span><span class='ft'>c</span><span class='ot'>)</span>) <span class='ot'>{</span> <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; <span class='ot'>}</span> 
+     <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+     <span class='lk'>return</span> <span class='ft'>HEX_TYPE</span><span class='ot'>;</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// Deal with 0-9 digits______________________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span><span class='ct'>isdigit</span><span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>)</span>) 
+  <span class='ot'>{</span> 
+     <span class='lk'>while</span> <span class='ot'>(</span><span class='ct'>isdigit</span><span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>)</span>) 
+     <span class='ot'>{</span> 
+       <span class='lk'>char</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; 
+       <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> 
+     <span class='ot'>}</span> 
+     <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+     <span class='lk'>return</span> <span class='ft'>DIGITS_TYPE</span><span class='ot'>;</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='co'>// Ascii string______________________________________________ </span>
+  <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>isletter</span><span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>)</span> <span class='ot'>||</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>==</span><span class='st'>&#39;_&#39;</span><span class='ot'>)</span> 
+  <span class='ot'>{</span> 
+    <span class='lk'>while</span> <span class='ot'>(</span><span class='ft'>isascii2</span><span class='ot'>(</span>*<span class='ft'>s</span><span class='ot'>)</span>) 
+     <span class='ot'>{</span> 
+       <span class='lk'>char</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>++</span>; 
+       <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=<span class='ft'>c</span><span class='ot'>;</span> 
+     <span class='ot'>}</span> 
+     <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+     <span class='lk'>return</span> <span class='ft'>FUNCTION_TYPE</span><span class='ot'>;</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='lk'>char</span> <span class='ft'>separators</span><span class='ot'>[]</span> <span class='ot'>=</span> <span class='st'>&quot;{}[]()&lt;&gt;;,:&amp;=.~*!+-/|\\%&quot;</span><span class='ot'>;</span> 
+  <span class='lk'>if</span>  <span class='ot'>(</span><span class='ft'>strchr</span><span class='ot'>(</span><span class='ft'>separators</span><span class='ot'>,</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span>) 
+  <span class='ot'>{</span> 
+    <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>++</span>]=*<span class='ft'>s</span><span class='ot'>++</span>; 
+    <span class='ft'>tok</span><span class='ot'>[</span><span class='ft'>incby</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+    <span class='lk'>return</span> <span class='ft'>SEPARATORS</span><span class='ot'>;</span> 
+  <span class='ot'>}</span> 
+ 
+  <span class='ct'>strncpy</span><span class='ot'>(</span><span class='ft'>tmp</span><span class='ot'>,</span> <span class='ft'>s</span><span class='ot'>,</span> <span class='dt'>10</span><span class='ot'>)</span>; <span class='ft'>tmp</span><span class='ot'>[</span><span class='dt'>10</span><span class='ot'>]</span>=<span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> 
+  <span class='ct'>sprintf</span><span class='ot'>(</span><span class='ft'>tmp</span><span class='ot'>,</span> <span class='st'>&quot;should never happen [%c] [%s] &quot;</span><span class='ot'>,</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>,</span> <span class='ft'>tmp</span><span class='ot'>)</span>; 
+  <span class='ft'>madd</span><span class='ot'>(</span><span class='ft'>tmp</span><span class='ot'>)</span>; 
+  <span class='co'>//Should never happen________________________________________ </span>
+  <span class='lk'>return</span> <span class='ft'>DEFINE_NULL</span><span class='ot'>;</span> 
+ 
+<span class='ot'>}</span> 
+ 
+<span class='co'>//------------------------------------------------------------------------------ </span>
+<span class='co'>// Function to convert special characters to HTML entities </span>
+<span class='co'>//------------------------------------------------------------------------------</span>
+
+<span class='lk'>void</span> <span class='ft'>charHtml</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>,</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>out</span><span class='ot'>)</span>
+<span class='ot'>{</span>
+    <span class='ct'>strcpy</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;&quot;</span><span class='ot'>)</span>; <span class='co'>// Initialize the output string</span>
+    <span class='lk'>for</span> <span class='ot'>(</span><span class='lk'>unsigned</span> <span class='lk'>int</span> <span class='ft'>i</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> <span class='ft'>i</span> <span class='ot'>&lt;</span> <span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>)</span>; <span class='ot'>++</span><span class='ft'>i</span><span class='ot'>)</span>
+    <span class='ot'>{</span>
+        <span class='lk'>char</span> <span class='ft'>c</span> <span class='ot'>=</span> <span class='ft'>s</span><span class='ot'>[</span><span class='ft'>i</span><span class='ot'>]</span>;
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;&amp;&#39;</span><span class='ot'>)</span> <span class='ot'>{</span>
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;&amp;amp;&quot;</span><span class='ot'>)</span>;
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;\t&#39;</span><span class='ot'>)</span> <span class='ot'>{</span> 
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;    &quot;</span><span class='ot'>)</span>; 
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;&lt;&#39;</span><span class='ot'>)</span> <span class='ot'>{</span>
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;&amp;lt;&quot;</span><span class='ot'>)</span>;
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;\r&#39;</span><span class='ot'>)</span> <span class='ot'>{</span>
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot; &quot;</span><span class='ot'>)</span>;
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;&gt;&#39;</span><span class='ot'>)</span> <span class='ot'>{</span>
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;&amp;gt;&quot;</span><span class='ot'>)</span>;
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;&quot;&#39;</span><span class='ot'>)</span> <span class='ot'>{</span>
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;&amp;quot;&quot;</span><span class='ot'>)</span>;
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;\&#39;&#39;</span><span class='ot'>)</span> <span class='ot'>{</span>
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;&amp;#39;&quot;</span><span class='ot'>)</span>; <span class='co'>// Alternatively, you can use &amp;apos; for &#39;</span>
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>c</span> <span class='ot'>==</span> <span class='st'>&#39;\n&#39;</span><span class='ot'>)</span> <span class='ot'>{</span>
+            <span class='ct'>strcat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='st'>&quot;\r\n&quot;</span><span class='ot'>)</span>;
+        <span class='ot'>}</span> <span class='lk'>else</span> <span class='ot'>{</span>
+            <span class='ct'>strncat</span><span class='ot'>(</span><span class='ft'>out</span><span class='ot'>,</span> <span class='ot'>&amp;</span><span class='ft'>c</span><span class='ot'>,</span> <span class='dt'>1</span><span class='ot'>)</span>; <span class='co'>// Append the character as-is if no conversion is needed</span>
+        <span class='ot'>}</span>
+    <span class='ot'>}</span>
+<span class='ot'>}</span> 
+ 
+<span class='co'>//------------------------------------------------------------------------------ </span>
+ 
+<span class='ft'>AnsiString</span> <span class='ft'>use_class</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span><span class='ot'>)</span> 
+<span class='ot'>{</span> 
+  <span class='ft'>AnsiString</span> <span class='ft'>a</span> <span class='ot'>=</span> <span class='st'>&quot;&lt;span class=&#39;&quot;</span><span class='ot'>;</span> <span class='ft'>a</span> <span class='ot'>+</span>= <span class='ft'>s</span><span class='ot'>;</span> <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;&#39;&gt;&quot;</span><span class='ot'>;</span> 
+  <span class='lk'>return</span> <span class='ft'>a</span><span class='ot'>;</span> 
+<span class='ot'>}</span> 
+ 
+<span class='co'>//------------------------------------------------------------------------------ </span>
+ 
+<span class='lk'>void</span> <span class='ft'>colorize_it</span><span class='ot'>(</span><span class='lk'>const</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>input_file</span><span class='ot'>,</span> <span class='lk'>const</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>output_file</span><span class='ot'>)</span> 
+<span class='ot'>{</span> 
+    <span class='ft'>FILE</span> <span class='ot'>*</span> <span class='ft'>file</span> <span class='ot'>=</span> <span class='ft'>fopen</span><span class='ot'>(</span><span class='ft'>input_file</span><span class='ot'>,</span> <span class='st'>&quot;rb&quot;</span><span class='ot'>)</span>; 
+    <span class='lk'>if</span> <span class='ot'>(</span>!<span class='ft'>file</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+        <span class='ct'>printf</span><span class='ot'>(</span><span class='st'>&quot;Error opening files!\n&quot;</span><span class='ot'>)</span>; 
+        <span class='lk'>return</span><span class='ot'>;</span> 
+    <span class='ot'>}</span> 
+    <span class='ft'>fseek</span><span class='ot'>(</span><span class='ft'>file</span><span class='ot'>,</span> <span class='dt'>0</span><span class='ot'>,</span> <span class='ft'>SEEK_END</span><span class='ot'>)</span>; <span class='co'>// go to the end and get the </span>
+    <span class='lk'>long</span> <span class='ft'>size</span> <span class='ot'>=</span> <span class='ft'>ftell</span><span class='ot'>(</span><span class='ft'>file</span><span class='ot'>)</span>; <span class='co'>// current file pointer position </span>
+    <span class='co'>// allocate roundin up to the nearest 16th </span>
+    <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>s</span> <span class='ot'>=</span> <span class='lk'>new</span> <span class='lk'>char</span> <span class='ot'>[</span>((<span class='ft'>size</span><span class='ot'>/</span><span class='dt'>16</span><span class='ot'>)</span>+<span class='dt'>1</span><span class='ot'>)</span>*<span class='dt'>16</span><span class='ot'>]</span>; 
+    <span class='ft'>fseek</span><span class='ot'>(</span><span class='ft'>file</span><span class='ot'>,</span> <span class='dt'>0</span><span class='ot'>,</span> <span class='ft'>SEEK_SET</span><span class='ot'>)</span>; 
+    <span class='co'>// Read the file content into the char array </span>
+    <span class='ft'>fread</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>,</span> <span class='dt'>1</span><span class='ot'>,</span> <span class='ft'>size</span><span class='ot'>,</span> <span class='ft'>file</span><span class='ot'>)</span>; 
+    <span class='ft'>s</span><span class='ot'>[</span><span class='ft'>size</span><span class='ot'>]</span> <span class='ot'>=</span> <span class='st'>&#39;\0&#39;</span><span class='ot'>;</span> <span class='co'>// Null-terminate the string </span>
+    <span class='ft'>fclose</span><span class='ot'>(</span><span class='ft'>file</span><span class='ot'>)</span>; 
+ 
+    <span class='lk'>int</span> <span class='ft'>pos</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='lk'>int</span> <span class='ft'>incby</span> <span class='ot'>=</span> <span class='dt'>1</span><span class='ot'>;</span> 
+    <span class='lk'>int</span> <span class='ft'>oldtype</span> <span class='ot'>=</span> <span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>tmp</span> <span class='ot'>=</span> <span class='lk'>new</span> <span class='lk'>char</span> <span class='ot'>[</span><span class='dt'>65536</span><span class='ot'>]</span>; 
+    <span class='lk'>char</span> <span class='ot'>*</span><span class='ft'>tok</span> <span class='ot'>=</span> <span class='lk'>new</span> <span class='lk'>char</span> <span class='ot'>[</span><span class='dt'>65536</span><span class='ot'>]</span>; 
+ 
+    <span class='ft'>AnsiString</span> <span class='ft'>a</span> <span class='ot'>=</span> <span class='st'>&quot;&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;&lt;title&gt;Syntax Highlighted Code&lt;/title&gt;\n&lt;style&gt;\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .pp { color: lightgreen; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .ot { color: white; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .pu { color: purple; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .dt { color: red; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .ft { color: aqua; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .st { color: yellow; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .lk { color: lightgreen; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .ct { color: #ffbf00; }\n&quot;</span><span class='ot'>;</span> 
+    <span class='ft'>a</span> <span class='ot'>+</span>= <span class='st'>&quot;  .co { background-color: black; color: #D3D3D3; font-style: italic; padding: 2px; }\n&quot;</span><span class='ot'>;</span> 
+ 
+    <span class='ft'>AnsiString</span> <span class='ft'>b</span> <span class='ot'>=</span>  <span class='st'>&quot;  &lt;/style&gt;\n&lt;/head&gt;\n&lt;body style=&#39;background-color: navy; &quot;</span><span class='ot'>;</span> 
+               <span class='ft'>b</span> <span class='ot'>+</span>= <span class='st'>&quot;font-size: 20px; color: white;&#39;&gt;\n &lt;pre&gt;\n&quot;</span><span class='ot'>;</span> 
+ 
+    <span class='lk'>int</span> <span class='ft'>type</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='lk'>int</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span>  
+    <span class='lk'>int</span> <span class='ft'>newClass</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+    <span class='lk'>int</span> <span class='ft'>oldClass</span><span class='ot'>=</span><span class='dt'>99</span><span class='ot'>;</span> 
+    <span class='lk'>enum</span> <span class='ot'>{</span> <span class='ft'>_pp</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>,</span><span class='ft'>_ot</span><span class='ot'>,</span><span class='ft'>_pu</span><span class='ot'>,</span><span class='ft'>_dt</span><span class='ot'>,</span><span class='ft'>_ft</span><span class='ot'>,</span><span class='ft'>_st</span><span class='ot'>,</span><span class='ft'>_lk</span><span class='ot'>,</span><span class='ft'>_ct</span><span class='ot'>,</span><span class='ft'>_co</span> <span class='ot'>}</span>;  
+    <span class='lk'>while</span> <span class='ot'>(</span><span class='ft'>pos</span> <span class='ot'>&lt;</span> <span class='ft'>size</span> <span class='ot'>&amp;&amp;</span> <span class='ft'>incby</span><span class='ot'>!=</span><span class='dt'>0</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+      <span class='ft'>oldtype</span> <span class='ot'>=</span> <span class='ft'>type</span><span class='ot'>;</span> 
+      <span class='ft'>type</span> <span class='ot'>=</span> <span class='ft'>getToken</span><span class='ot'>(</span><span class='ft'>s</span><span class='ot'>,</span> <span class='ft'>pos</span><span class='ot'>,</span> <span class='ft'>incby</span><span class='ot'>,</span> <span class='ft'>tok</span><span class='ot'>)</span>; 
+      <span class='ft'>pos</span> <span class='ot'>+</span>= <span class='ft'>incby</span><span class='ot'>;</span> 
+      <span class='ft'>charHtml</span><span class='ot'>(</span><span class='ft'>tok</span><span class='ot'>,</span> <span class='ft'>tmp</span><span class='ot'>)</span>; 
+      <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> 
+      <span class='ft'>oldClass</span> <span class='ot'>=</span> <span class='ft'>newClass</span><span class='ot'>;</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>!=</span> <span class='ft'>oldtype</span><span class='ot'>)</span> 
+      <span class='ot'>{</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>HASH_DIRECTIVE</span>    <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;pp&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_pp</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>OPERATOR_TYPE</span>     <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;ot&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_ot</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>HEX_TYPE</span>          <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;pu&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_pu</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>DIGITS_TYPE</span>       <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;dt&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_dt</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>FUNCTION_TYPE</span>     <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;ft&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_ft</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span>(<span class='ft'>type</span><span class='ot'>==</span> <span class='ft'>STRING_TYPE</span> <span class='ot'>||</span>    
+            <span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>CHAR_TYPE</span><span class='ot'>)</span>        <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;st&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_st</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>LANG_KEYWORD</span>      <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;lk&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_lk</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>COMMON_TYPE</span>       <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;ct&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_ct</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+        <span class='lk'>if</span> <span class='ot'>(</span>(<span class='ft'>type</span><span class='ot'>==</span> <span class='ft'>MULTI_COMMENT</span> <span class='ot'>||</span> 
+            <span class='ft'>type</span> <span class='ot'>==</span> <span class='ft'>SINGLE_COMMENT</span><span class='ot'>)</span>   <span class='ot'>)</span>   <span class='ot'>{</span> <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>use_class</span><span class='ot'>(</span><span class='st'>&quot;co&quot;</span><span class='ot'>)</span>; <span class='ft'>newClass</span><span class='ot'>=</span><span class='ft'>_co</span><span class='ot'>;</span> <span class='ft'>didspan</span><span class='ot'>=</span><span class='dt'>1</span><span class='ot'>;</span> <span class='ot'>}</span> 
+      <span class='ot'>}</span> 
+             
+      <span class='ft'>b</span> <span class='ot'>+</span>= <span class='ft'>tmp</span><span class='ot'>;</span> 
+      <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>didspan</span><span class='ot'>==</span><span class='dt'>1</span><span class='ot'>)</span> 
+      <span class='ot'>{</span> 
+        <span class='ft'>b</span> <span class='ot'>+</span>= <span class='st'>&quot;&lt;/span&gt;&quot;</span><span class='ot'>;</span> 
+      <span class='ot'>}</span> 
+      <span class='lk'>else</span> 
+      <span class='ot'>{</span> 
+        <span class='lk'>int</span> <span class='ft'>j</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> <span class='lk'>int</span> <span class='ft'>k</span><span class='ot'>=</span><span class='dt'>0</span><span class='ot'>;</span> <span class='lk'>int</span> <span class='ft'>z</span><span class='ot'>=</span><span class='ft'>j</span><span class='ot'>+</span><span class='ft'>k</span><span class='ot'>;</span> 
+      <span class='ot'>}</span> 
+    <span class='ot'>}</span> 
+ 
+    <span class='ft'>a</span> <span class='ot'>=</span> <span class='ft'>a</span> <span class='ot'>+</span> <span class='ft'>b</span><span class='ot'>;</span> 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ct'>strlen</span><span class='ot'>(</span><span class='ft'>output_file</span><span class='ot'>)</span>) 
+    <span class='ot'>{</span> 
+      <span class='ft'>FILE</span> <span class='ot'>*</span><span class='ft'>f</span> <span class='ot'>=</span> <span class='ft'>fopen</span><span class='ot'>(</span><span class='ft'>output_file</span><span class='ot'>,</span> <span class='st'>&quot;w+b&quot;</span><span class='ot'>)</span>; 
+      <span class='ft'>fwrite</span><span class='ot'>(</span><span class='ft'>a</span><span class='ot'>.</span><span class='ft'>c_str</span><span class='ot'>()</span>,<span class='dt'>1</span><span class='ot'>,</span><span class='ft'>a</span><span class='ot'>.</span><span class='ft'>Length</span><span class='ot'>()</span>,<span class='ft'>f</span><span class='ot'>)</span>;       
+      <span class='ft'>fclose</span><span class='ot'>(</span><span class='ft'>f</span><span class='ot'>)</span>; 
+    <span class='ot'>}</span> 
+    <span class='lk'>else</span>  
+    <span class='ot'>{</span>     
+      <span class='ft'>madd</span><span class='ot'>(</span><span class='ft'>a</span><span class='ot'>.</span><span class='ft'>c_str</span><span class='ot'>()</span>); 
+    <span class='ot'>}</span> 
+ 
+    <span class='lk'>delete</span> <span class='ot'>[]</span><span class='ft'>tok</span><span class='ot'>;</span> 
+    <span class='lk'>delete</span> <span class='ot'>[]</span><span class='ft'>tmp</span><span class='ot'>;</span> 
+    <span class='lk'>delete</span> <span class='ot'>[]</span><span class='ft'>s</span><span class='ot'>;</span> 
+ 
+<span class='ot'>}</span> 
+ 
+<span class='pp'>#if defined(__BORLANDC__) &amp;&amp; defined(__clang__) &amp;&amp; defined(_WIN32) &amp;&amp; !defined(_WIN64) </span>
+ 
+<span class='co'>// Main function with command-line parameters </span>
+<span class='lk'>int</span> <span class='ft'>main</span><span class='ot'>(</span><span class='lk'>int</span> <span class='ft'>argc</span><span class='ot'>,</span> <span class='lk'>char</span><span class='ot'>*</span> <span class='ft'>argv</span><span class='ot'>[]</span>) <span class='ot'>{</span> 
+    <span class='co'>// Check if the correct number of arguments is provided </span>
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>argc</span> <span class='ot'>&lt;</span> <span class='dt'>2</span><span class='ot'>)</span> 
+    <span class='ot'>{</span> 
+        <span class='ct'>printf</span><span class='ot'>(</span><span class='st'>&quot;Usage: %s &lt;infile&gt; [&lt;outfile&gt;]\n&quot;</span><span class='ot'>,</span> <span class='ft'>argv</span><span class='ot'>[</span><span class='dt'>0</span><span class='ot'>]</span>); 
+        <span class='lk'>return</span> <span class='dt'>1</span><span class='ot'>;</span> <span class='co'>// Return an error code </span>
+    <span class='ot'>}</span> 
+    <span class='lk'>char</span> <span class='ft'>outf</span><span class='ot'>[</span><span class='dt'>128</span><span class='ot'>]</span>; <span class='ct'>strcpy</span><span class='ot'>(</span><span class='ft'>outf</span><span class='ot'>,</span> <span class='st'>&quot;&quot;</span><span class='ot'>)</span>; 
+    <span class='lk'>if</span> <span class='ot'>(</span><span class='ft'>argc</span> <span class='ot'>&gt;</span> <span class='dt'>2</span><span class='ot'>)</span> <span class='ct'>strcpy</span><span class='ot'>(</span><span class='ft'>outf</span><span class='ot'>,</span> <span class='ft'>argv</span><span class='ot'>[</span><span class='dt'>2</span><span class='ot'>]</span>); 
+    <span class='ft'>colorize_it</span><span class='ot'>(</span><span class='ft'>argv</span><span class='ot'>[</span><span class='dt'>1</span><span class='ot'>]</span>, <span class='ft'>outf</span><span class='ot'>)</span> <span class='ot'>;</span> 
+ 
+<span class='ot'>}</span> 
+ 
+<span class='pp'>#endif  </span>
+ 
+ 
+ 
