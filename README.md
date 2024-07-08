@@ -6,6 +6,6 @@ Not sure if it is porduction quality
 
 The usage is 
 
-tokenize.exe <infile> [<outfile>]
+tokenize.exe infile [outfile]
 
 
